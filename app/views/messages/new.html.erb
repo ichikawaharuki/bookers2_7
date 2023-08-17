@@ -1,0 +1,35 @@
+<!-- app/views/messages/new.html.erb -->
+<div class='container px-5 px-sm-0'>
+  <div class='row'>
+    <div class='col-md-3'>
+<h1>New Message</h1>to <%= @recipient.name %>
+<%= form_with(model: @message, url: messages_path) do |f| %>
+  <%= f.hidden_field :recipient_id, value: @recipient.id %>
+  <%= f.text_area :content, placeholder: ' 最大140字 ' %>
+  <%= f.submit '送信' %>
+<% end %>
+　　</div>
+　　<div class='col-md-8 offset-md-1'>
+      <h2>Message</h2>
+<table class='table table-hover table-inverse'>
+  <thead>
+    <tr>
+      <th></th>
+      <th>送信者</th>
+      <th>メッセージ</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @messages.each do |message| %>
+      <tr>
+        <td></td>
+        <td><%= message.recipient.name %></td>
+        <td><%= message.content %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+    </div>
+  </div>
+</div>
