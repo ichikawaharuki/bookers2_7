@@ -15,7 +15,7 @@
   <thead>
     <tr>
       <th></th>
-      <th>送信者</th>
+      <th>受信者</th>
       <th>メッセージ</th>
       <th colspan="3"></th>
     </tr>
@@ -26,6 +26,15 @@
         <td></td>
         <td><%= message.recipient.name %></td>
         <td><%= message.content %></td>
+      </tr>
+    <% end %>
+  </tbody>
+    <tbody>
+    <% @received.each do |received| %>
+      <tr>
+        <td></td>
+        <td><%= received.recipient.name %></td>
+        <td><%= received.content %></td>
       </tr>
     <% end %>
   </tbody>

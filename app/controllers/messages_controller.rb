@@ -7,7 +7,8 @@ class MessagesController < ApplicationController
   def new
     @message = current_user.sent_messages.build
     @recipient = User.find(params[:user_id])
-    @messages = current_user.sent_messages.where(recipient: @recipient) # 特定の受信者に関するメッセージを取得
+    @messages = current_user.sent_messages.where(recipient: @recipient)
+    @received = current_user.received_messages# 特定の受信者に関するメッセージを取得
   end
 
  def create
