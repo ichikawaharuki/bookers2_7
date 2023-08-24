@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 2023_08_17_071429) do
     t.text "body"
     t.integer "user_id"
     t.integer "favorites_count"
+    t.integer "views_count", default: 0
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
   end

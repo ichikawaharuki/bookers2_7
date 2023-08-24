@@ -22,4 +22,8 @@ class Book < ApplicationRecord
     end
   end
   scope :past_week, -> { where(created_at: 1.week.ago..Time.now) }
+
+  def increment_views_count
+    self.update_attribute(:views_count, self.views_count + 1)
+  end
 end
