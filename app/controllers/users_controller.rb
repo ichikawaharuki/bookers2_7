@@ -11,6 +11,16 @@ class UsersController < ApplicationController
     @this_week_book = @books.created_this_week
     @last_week_book = @books.created_last_week
 
+     # 7日間の各日の投稿数を計算
+    @days_ago = []
+    @posts_in_last_7_days = {}
+    7.downto(1) do |i|
+     days_ago = i - 1 # 何日前か
+     post_date = days_ago.days.ago.to_date
+     post_count = @user.books.where("DATE(created_at) = ?", post_date).count
+     @posts_in_last_7_days["#{days_ago}日前"] = post_count
+     @days_ago << "#{days_ago}日前" # 日付の代わりに何日前を配列に追加
+    end
   end
 
   def index

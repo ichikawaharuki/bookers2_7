@@ -23,13 +23,13 @@
     <% if @yesterday_book.count == 0 %>
      <td>前日投稿なし</td>
      <% else %>
-       　<td><% @the_day_before =   @today_book.count / @yesterday_book.count.to_f  %>
-       　<%= (@the_day_before * 100).round %>%</td>
+        <td><% @the_day_before =   @today_book.count / @yesterday_book.count.to_f  %>
+        <%= (@the_day_before * 100).round %>%</td>
      <% end %>
   </tr>
 </table>
 
-<table border="1"
+<table border="1">
   <tr>
     <th>今週の投稿数</th>
     <th>前週の投稿数</th>
@@ -39,13 +39,79 @@
   <td><%= @this_week_book.count %></td>
   <td><%= @last_week_book.count %></td>
   <% if @last_week_book.count == 0 %>
-     <td>先週投稿なし</td>
+     <td>先週投稿はなし</td>
      <% else %>
-       　<td><% @the_week_before =   @this_week_book.count / @last_week_book.count.to_f  %>
-       　<%= (@the_week_before * 100).round %>%</td>
+        <td><% @the_week_before =   @this_week_book.count / @last_week_book.count.to_f  %>
+        <%= (@the_week_before * 100).round %>%</td>
      <% end %>
 </tr>
 </table>
+
+<h2>7日間分の投稿数</h2>
+<table border="1">
+  <tr>
+    <% @posts_in_last_7_days.each do |date, post_count| %>
+      <td>
+        <% if date == "0日前" %>
+          今日
+        <% else %>
+          <%= date %>
+        <% end %>
+      </td>
+    <% end %>
+  </tr>
+  <tr>
+    <% @posts_in_last_7_days.each do |date, post_count| %>
+      <td><%= post_count %></td>
+    <% end %>
+  </tr>
+</table>
+<canvas id="myLineChart"></canvas>
+  <script>
+         $(document).on('turbolinks:load', function() {
+      var ctx = document.getElementById("myLineChart");
+      var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+          labels: ['6日前', '5日前', '4日前', '3日前', '2日前', '1日前', '今日'],
+          datasets: [
+            {
+              label: '投稿した本の数',
+              data: [
+                <%= @books.created_6day_ago.count %>,
+                <%= @books.created_5day_ago.count %>,
+                <%= @books.created_4day_ago.count %>,
+                <%= @books.created_3day_ago.count %>,
+                <%= @books.created_2day_ago.count %>,
+                <%= @books.created_yesterday.count %>,
+                <%= @books.created_today.count %>
+              ],
+              borderColor: "rgba(0,0,255,1)",
+              backgroundColor: "rgba(0,0,0,0)",
+              tension: 0.4
+            }
+          ],
+        },
+        options: {
+          title: {
+            display: true,
+            text: '7日間の投稿数の比較'
+          },
+          responsive: true,
+          scales: {
+            y:{
+              suggestedMin: 0,
+              suggestedMax: 10
+            },
+            x:{
+              stacked: true
+            },
+          },
+        }
+      });
+    });
+  </script>
     </div>
   </div>
 </div>
+
