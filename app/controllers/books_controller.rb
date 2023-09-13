@@ -5,10 +5,11 @@ class BooksController < ApplicationController
   def show
     @book = Book.find(params[:id])
     @book_comment = BookComment.new
+    @book.increment_views_count
   end
 
   def index
-    @books = Book.all
+    @books = Book.past_week.includes(:favorites).order('favorites_count DESC')
     @book = Book.new
   end
 
