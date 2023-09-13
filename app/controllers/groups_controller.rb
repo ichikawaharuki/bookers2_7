@@ -18,9 +18,16 @@ class GroupsController < ApplicationController
       @group = Group.new
     end
 
+    def join
+      @group = Group.find(params[:group_id])
+      @group.users << current_user #<< 演算子はその左側のコレクションに、右側のオブジェクト（current_user）を追加するために使用
+      redirect_to  groups_path
+    end
+
     def create
       @group = Group.new(group_params)
       @group.owner_id = current_user.id
+      @group.users << current_user
       if @group.save
         redirect_to groups_path, method: :post
       else
@@ -29,6 +36,13 @@ class GroupsController < ApplicationController
     end
 
     def edit
+    end
+
+    def destroy
+      @group = Group.find(params[:id])
+      #current_userは、@group.usersから消されるという記述。
+      @group.users.delete(current_user)
+      redirect_to groups_path
     end
 
     def update
