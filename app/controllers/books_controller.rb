@@ -9,7 +9,7 @@ class BooksController < ApplicationController
   end
 
   def index
-    @books = Book.past_week.includes(:favorites).order('favorites_count DESC')
+    @books = Book.all
     @book = Book.new
   end
 
