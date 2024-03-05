@@ -28,4 +28,4 @@ class Book < ApplicationRecord
     self.update_attribute(:views_count, self.views_count + 1)
   end
 end
-#本の閲覧数が1増加し、その結果がデータベースに反映
+#increment_views_countが呼び出された場合(self)本の閲覧数が1増加し、その結果がデータベースに反映
