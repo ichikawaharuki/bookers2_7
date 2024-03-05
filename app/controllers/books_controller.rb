@@ -10,6 +10,7 @@ class BooksController < ApplicationController
 
   def index
     @books = Book.past_week.includes(:favorites).order('favorites_count DESC')
+    # 一週間分のいいねを取得して並べ替え
     @book = Book.new
   end
 
